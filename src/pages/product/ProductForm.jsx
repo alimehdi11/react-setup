@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaDollarSign, FaListCheck, FaLayerGroup } from "react-icons/fa6";
 import { FaShoppingBag } from "react-icons/fa";
 import Drawer from "../../components/Drawer";
-import FormGenerator from "../../components/FormGenerator";
+import FormGenerator from "../../components/FormElements/FormGenerator";
 
 const ProductForm = () => {
 

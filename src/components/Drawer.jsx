@@ -1,31 +1,46 @@
+import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+
 const Drawer = ({ children, title, size = "md" }) => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDrawer = () => navigate(-1);
+  const toggleDrawer = () => {
+    setIsOpen(false);
+    setTimeout(() => navigate(-1), 400);
+  };
 
   const sizeClasses = {
-    sm: "max-w-[300px]",
-    md: "max-w-[500px]",
-    lg: "max-w-[800px]",
-    full: "max-w-full",
+    sm: "w-[300px]",
+    md: "w-[500px]",
+    lg: "w-[800px]",
+    full: "w-full",
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 50);
+    // cleanup fn
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div
-      className="w-full inset-0 min-h-screen fixed bg-black/40"
+      className="fixed inset-0 bg-black/40 z-50"
       onClick={toggleDrawer}
     >
       <div
         className={twMerge(
-          "top-0 right-0 w-full absolute bg-white h-full duration-500 delay-200 flex flex-col overflow-hidden",
-          sizeClasses[size]
+          "fixed top-0 right-0 h-full bg-white duration-500 overflow-hidden",
+          sizeClasses[size],
+          isOpen ? "translate-x-0" : "translate-x-full"
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="flex justify-between items-center border-b-2 border-gray pb-2 p-3">
+        <header className="flex justify-between items-center border-b pb-2 p-3">
           <h1 className="text-lg font-semibold text-gray-700">{title}</h1>
           <button onClick={toggleDrawer}>
             <IoMdClose className="text-2xl" />
@@ -38,8 +53,4 @@ const Drawer = ({ children, title, size = "md" }) => {
   );
 };
 
-  
-
 export default Drawer;
-
-
