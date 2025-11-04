@@ -5,7 +5,6 @@ import Users from "./pages/users/Users";
 import Products from "./pages/product/Products";
 import ProductForm from "./pages/product/ProductForm";
 import UserForm from "./pages/users/UserForm";
-import Form from "./components/Form";
 
 const App = () => {
   return (
@@ -13,7 +12,6 @@ const App = () => {
       <Router>
         <TopBar />
         <Routes>
-          <Route path="/form" element={<Form />}/>
           <Route path="/" element={<Users />}>
             <Route path="create" element={<UserForm />} />
           </Route>

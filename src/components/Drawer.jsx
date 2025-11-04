@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
-const Drawer = ({ children, title, size = "md" }) => {
+const Drawer = ({ children, title, size = "md", onReady }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,6 +23,8 @@ const Drawer = ({ children, title, size = "md" }) => {
     const timer = setTimeout(() => {
       setIsOpen(true);
     }, 50);
+
+    if (onReady) onReady(toggleDrawer);
     // cleanup fn
     return () => clearTimeout(timer);
   }, []);

@@ -4,28 +4,20 @@ import InputElement from "./InputElement";
 import SelectElement from "./SelectElement";
 import { snakeCaseToTitle } from "../../utils/helperFunctions";
 
-const FormGenerator = ({ fields, onSubmit }) => {
+const FormGenerator = ({ fields, onSubmit ,closeDrawer}) => {
 
   // ✅ Dynamic initial values
-  const initialValues = Object.fromEntries(fields.map((f) => [f.name, f.defaultValue || ""]));
+  const initialValues = Object.fromEntries(fields.map((f) => [f.name, ""]));
 
   // ✅ Dynamic Yup validations
-  const validationSchema = Yup.object(
-
+  const validationSchema = Yup.object().shape(
     Object.fromEntries(
       fields.map((field) => {
-        let rule = Yup.string();
         const fieldName = field.label || snakeCaseToTitle(field.name);
-
-        if (field.required)
-          rule = rule.required(`${fieldName} is required`);
-
-        if (field.min)
-          rule = rule.min(field.min, `${fieldName} must be at least ${field.min} characters`);
-
-        if (field.pattern)
-          rule = rule.matches(field.pattern, `${fieldName} is invalid`);
-
+        let rule = Yup.string();
+        if (field.required) rule = rule.required(`${fieldName} is required`);
+        if (field.min) rule = rule.min(field.min, `${fieldName} must be at least ${field.min} characters`);
+        if (field.pattern) rule = rule.matches(field.pattern, `${fieldName} is invalid`);
         return [field.name, rule];
       })
     )
@@ -33,16 +25,16 @@ const FormGenerator = ({ fields, onSubmit }) => {
 
 
 
-  const onSubmitFn = (values, { resetForm }) => {
-    onSubmit(values);
-    resetForm();
-  }
+
 
   // ✅ Formik Hook
   const { handleBlur, handleChange, handleSubmit, errors, touched, values } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: onSubmitFn,
+    onSubmit: (values, { resetForm }) => {
+      onSubmit(values);
+      resetForm();
+    },
   });
 
   return (
@@ -68,7 +60,7 @@ const FormGenerator = ({ fields, onSubmit }) => {
       <div className="flex gap-2 justify-end border-t-2 border-gray-200 p-3">
         <button
           type="button"
-          onClick={() => window.history.back()}
+          onClick={closeDrawer}
           className="rounded-lg border px-5 py-1"
         >
           Cancel

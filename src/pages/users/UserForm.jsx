@@ -4,12 +4,15 @@ import { FaCity, FaUser } from "react-icons/fa";
 import { useUsers } from "../../contexts/UserContext";
 import Drawer from "../../components/Drawer";
 import FormGenerator from "../../components/FormElements/FormGenerator";
+import { useState } from "react";
 
 const UserForm = () => {
   const { addAndUpdateUser } = useUsers();
+  const [closeDrawer, setCloseDrawer] = useState(null);
 
   const handleSubmit = (user) => {
     addAndUpdateUser(user);
+    closeDrawer();
   };
 
   const userFormFields = [
@@ -43,16 +46,17 @@ const UserForm = () => {
   ];
 
 
-
+  const getToggleDrawer = (fn) => {
+    setCloseDrawer(()=>fn)
+  }
 
   return (
     <>
-      <Drawer title="Add User">
+      <Drawer title="Add User" onReady={getToggleDrawer}>
         <FormGenerator
           fields={userFormFields}
           onSubmit={handleSubmit}
-          // values={user}
-          // setValues={setUser}
+          closeDrawer={closeDrawer}
         />
       </Drawer>
     </>
