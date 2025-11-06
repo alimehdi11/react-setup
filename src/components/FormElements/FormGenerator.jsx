@@ -3,12 +3,13 @@ import * as Yup from "yup";
 import InputElement from "./InputElement";
 import SelectElement from "./SelectElement";
 import { snakeCaseToTitle } from "../../utils/helperFunctions";
+import { useComponentContext } from "../../contexts/ComponentContext";
 
-const FormGenerator = ({ fields, onSubmit ,closeDrawer}) => {
+const FormGenerator = ({ fields, onSubmit }) => {
+  const { toggleDrawer } = useComponentContext();
 
   // ✅ Dynamic initial values
-  const initialValues = Object.fromEntries(fields.map((f) => [f.name, ""]));
-
+  const initialValues = Object.fromEntries(fields.map((f) => [f.name, f.value || ""]));
   // ✅ Dynamic Yup validations
   const validationSchema = Yup.object().shape(
     Object.fromEntries(
@@ -31,8 +32,10 @@ const FormGenerator = ({ fields, onSubmit ,closeDrawer}) => {
   const { handleBlur, handleChange, handleSubmit, errors, touched, values } = useFormik({
     initialValues,
     validationSchema,
+    enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
       onSubmit(values);
+      toggleDrawer();
       resetForm();
     },
   });
@@ -60,7 +63,7 @@ const FormGenerator = ({ fields, onSubmit ,closeDrawer}) => {
       <div className="flex gap-2 justify-end border-t-2 border-gray-200 p-3">
         <button
           type="button"
-          onClick={closeDrawer}
+          onClick={toggleDrawer}
           className="rounded-lg border px-5 py-1"
         >
           Cancel

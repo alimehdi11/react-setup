@@ -7,7 +7,6 @@ const UserContext = createContext();
 // 2️⃣ Create Provider Component
 const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
-  const [editUser, setEditUser] = useState(null);
   const handleDeleteUser = async (id) => {
     const deleteUser = await api.userApi.deleteUser(id);
     if (deleteUser) {
@@ -16,26 +15,20 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  const addAndUpdateUser = async (newUser) => {
-    if (editUser) {
-      const user = await api.userApi.updateUser(newUser);
-      if (!user) return;
-      const updateUsers = users.map((oldUser) =>
-        oldUser.id == editUser.id ? user : oldUser
-      );
-      setUsers(updateUsers);
-      setEditUser(null);
-    } else {
-      const newUserWithId = { ...newUser, id: String(users.length + 1) };
-      const user = await api.userApi.createUser(newUserWithId);
-      if (!user) return;
-      setUsers([...users, user]);
+  const addAndUpdateUser = async (userData, id = null) => {
+    if (id) {
+      const updatedUser = await api.userApi.updateUser(userData,id);
+      if (!updatedUser) return;
+      setUsers((prev) =>  prev.map((u) => (u.id === id ? updatedUser : u)));
+      return;
     }
+    const createdUser = await api.userApi.createUser(userData);
+    if (!createdUser) return;
+    setUsers((prev) => [...prev, createdUser]);
   };
 
-  const editUserFn = (user) => {
-    setEditUser(user);
-  };
+
+
 
   const fetchAllUsers = async () => {
     const users = await api.userApi.getAllUsers();
@@ -50,8 +43,6 @@ const UserProvider = ({ children }) => {
   const userContextValue = {
     users,
     addAndUpdateUser,
-    editUser,
-    editUserFn,
     handleDeleteUser,
   };
 

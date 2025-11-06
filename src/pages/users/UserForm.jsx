@@ -4,15 +4,17 @@ import { FaCity, FaUser } from "react-icons/fa";
 import { useUsers } from "../../contexts/UserContext";
 import Drawer from "../../components/Drawer";
 import FormGenerator from "../../components/FormElements/FormGenerator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import api from "../../Api";
 
 const UserForm = () => {
   const { addAndUpdateUser } = useUsers();
-  const [closeDrawer, setCloseDrawer] = useState(null);
+  const [user, setUser] = useState();
+  const { id } = useParams();
 
   const handleSubmit = (user) => {
-    addAndUpdateUser(user);
-    closeDrawer();
+    addAndUpdateUser(user,id);
   };
 
   const userFormFields = [
@@ -21,6 +23,7 @@ const UserForm = () => {
       icon: <FaUser className="text-blue-500" />,
       required: true,
       min: 3,
+      value: user?.name,
     },
     {
       name: "contact_number",
@@ -28,6 +31,7 @@ const UserForm = () => {
       type: "number",
       required: true,
       min: 10,
+      value: user?.contact_number,
     },
     {
       name: "email",
@@ -35,6 +39,7 @@ const UserForm = () => {
       type: "email",
       required: true,
       pattern: /^\S+@\S+\.\S+$/,
+      value: user?.email,
     },
     {
       name: "city",
@@ -42,21 +47,29 @@ const UserForm = () => {
       type: "select",
       required: true,
       options: ["karachi", "lahore", "islamabad", "quetta", "peshawar", "hyderabad"],
+      value: user?.city,
     },
   ];
 
 
-  const getToggleDrawer = (fn) => {
-    setCloseDrawer(()=>fn)
+  const getUser = async () => {
+    if (id) {
+      const user = await api.userApi.getUserById(id);
+      setUser(user);
+    }
   }
+
+  useEffect(() => {
+    getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   return (
     <>
-      <Drawer title="Add User" onReady={getToggleDrawer}>
+      <Drawer title={`${id ? "Update" : "Add"} User`}>
         <FormGenerator
           fields={userFormFields}
           onSubmit={handleSubmit}
-          closeDrawer={closeDrawer}
         />
       </Drawer>
     </>

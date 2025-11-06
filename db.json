@@ -1,46 +1,25 @@
 {
   "users": [
     {
-      "id": "5",
       "name": "abc",
       "contact_number": 31701228852,
       "email": "abc@gmail.com",
-      "city": "karachi"
+      "city": "karachi",
+      "id": "9"
     },
     {
-      "id": "6",
-      "name": "jan muhammad",
+      "id": "1",
+      "name": "khizar",
       "contact_number": 3170128852,
-      "email": "Asad@gmail.com",
-      "city": "islamabad"
-    },
-    {
-      "id": "7",
-      "name": "sss",
-      "contact_number": 44444444444,
-      "email": "Asad@gmail.com",
+      "email": "ykhizar65@gmail.com",
       "city": "karachi"
     },
     {
-      "id": "8",
-      "name": "kawal",
-      "contact_number": 10101010000,
-      "email": "kawal@gmail.com",
+      "id": "2",
+      "name": "khizar",
+      "contact_number": 3170128852,
+      "email": "ykhizar65@gmail.com",
       "city": "karachi"
-    },
-    {
-      "id": "9",
-      "name": "liza",
-      "contact_number": 3128886651,
-      "email": "a@gmail.com",
-      "city": "quetta"
-    },
-    {
-      "id": "10",
-      "name": "Asad",
-      "contact_number": 2222222222,
-      "email": "aa@gmail.com",
-      "city": "lahore"
     }
   ],
   "products": [

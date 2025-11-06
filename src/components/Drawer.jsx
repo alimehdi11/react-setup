@@ -1,16 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { useComponentContext } from "../contexts/ComponentContext";
 
-const Drawer = ({ children, title, size = "md", onReady }) => {
-  const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDrawer = () => {
-    setIsOpen(false);
-    setTimeout(() => navigate(-1), 400);
-  };
+const Drawer = ({ children, title, size = "md" }) => {
+  const { toggleDrawer, isOpen, setIsOpen } = useComponentContext();
 
   const sizeClasses = {
     sm: "w-[300px]",
@@ -24,7 +18,6 @@ const Drawer = ({ children, title, size = "md", onReady }) => {
       setIsOpen(true);
     }, 50);
 
-    if (onReady) onReady(toggleDrawer);
     // cleanup fn
     return () => clearTimeout(timer);
   }, []);

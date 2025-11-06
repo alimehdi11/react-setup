@@ -4,12 +4,15 @@ import App from "./App";
 import UserProvider from "./contexts/UserContext";
 import ThemeProvider from "./contexts/ThemeContext";
 import ProductProvider from "./contexts/ProductContext";
+import ComponentProvider from "./contexts/ComponentContext";
 createRoot(document.getElementById("root")).render(
   <ThemeProvider>
-    <UserProvider>
-      <ProductProvider>
-        <App />
-      </ProductProvider>
-    </UserProvider>
+    <ComponentProvider>
+      <UserProvider>
+        <ProductProvider>
+          <App />
+        </ProductProvider>
+      </UserProvider>
+    </ComponentProvider>
   </ThemeProvider>
 );

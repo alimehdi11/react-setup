@@ -14,7 +14,7 @@ const getAllUsers = async () => {
 const createUser = async (user) => {
   try {
     const { data } = await axios.post(`${apiUrl}/users`, user);
-  console.log(data);
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Error creating user:", error);
@@ -30,20 +30,29 @@ const deleteUser = async (userId) => {
   }
 };
 
-const updateUser = async (user) => {
+const updateUser = async (user, id) => {
   try {
-    const { data } = await axios.put(`${apiUrl}/users/${user.id}`, user);
+    const { data } = await axios.put(`${apiUrl}/users/${id}`, user);
     return data;
   } catch (error) {
     console.error("Error updating user:", error);
   }
 };
 
+const getUserById = async (userId) => {
+  try {
+    const { data } = await axios.get(`${apiUrl}/users/${userId}`);
+    return data;
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+  }
+}
 const userApi = {
   getAllUsers,
   createUser,
   deleteUser,
   updateUser,
+  getUserById
 };
 
 export default userApi;

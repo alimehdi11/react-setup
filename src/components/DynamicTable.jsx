@@ -1,8 +1,9 @@
+import { NavLink } from 'react-router-dom';
 import { snakeCaseToTitle } from '../utils/helperFunctions'
 import { Activity } from 'react';
 
-const DynamicTable = ({ columns, data, onEdit, onDelete }) => {
-  const showActions = onDelete && onEdit;
+const DynamicTable = ({ columns, data, onEditLink, onDelete }) => {
+  const showActions = onDelete && onEditLink;
 
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
@@ -32,9 +33,9 @@ const DynamicTable = ({ columns, data, onEdit, onDelete }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100max-h-[500px] overflow-auto">
-            {data.map((item) => (
+            {data.map((item,idx) => (
               <tr
-                key={item.id}
+                key={idx}
                 className="transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 group"
               >
                 {columns.map((col, colIndex) => (
@@ -54,8 +55,8 @@ const DynamicTable = ({ columns, data, onEdit, onDelete }) => {
                   <td className="px-8 py-6">
                     <div className="flex items-center gap-2">
                       {/* Edit Button */}
-                      <button
-                        onClick={() => onEdit(item)}
+                      <NavLink
+                        to={`${onEditLink}/${item.id}`}
                         className="inline-flex items-center justify-center p-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 group/btn"
                         title="Edit"
                       >
@@ -65,7 +66,7 @@ const DynamicTable = ({ columns, data, onEdit, onDelete }) => {
                         <span className="ml-1 text-xs font-medium">
                           Edit
                         </span>
-                      </button>
+                      </NavLink>
 
                       {/* Delete Button */}
                       <button
