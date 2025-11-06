@@ -23,7 +23,6 @@ const UserForm = () => {
       icon: <FaUser className="text-blue-500" />,
       required: true,
       min: 3,
-      value: user?.name,
     },
     {
       name: "contact_number",
@@ -31,7 +30,6 @@ const UserForm = () => {
       type: "number",
       required: true,
       min: 10,
-      value: user?.contact_number,
     },
     {
       name: "email",
@@ -39,7 +37,6 @@ const UserForm = () => {
       type: "email",
       required: true,
       pattern: /^\S+@\S+\.\S+$/,
-      value: user?.email,
     },
     {
       name: "city",
@@ -47,7 +44,6 @@ const UserForm = () => {
       type: "select",
       required: true,
       options: ["karachi", "lahore", "islamabad", "quetta", "peshawar", "hyderabad"],
-      value: user?.city,
     },
   ];
 
@@ -70,6 +66,7 @@ const UserForm = () => {
         <FormGenerator
           fields={userFormFields}
           onSubmit={handleSubmit}
+          defaultValues={user}
         />
       </Drawer>
     </>

@@ -6,21 +6,28 @@ const ProductContext = createContext();
 const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
 
-  const addAndUpdateProduct = async (newProduct) => {
-    // if (editUser) {
-    //   const product = await api.userApi.updateUser(newUser);
-    //   if (!user) return;
-    //   const updateUsers = users.map((oldUser) =>
-    //     oldUser.id == editUser.id ? user : oldUser
-    //   );
-    //   setUsers(updateUsers);
-    //   setEditUser(null);
-    // } else {
+const handleDeleteProduct = async(id) => {
+  const deleteProduct = await api.productApi.deleteProduct(id);
+if (deleteProduct) {
+  const updatedProduct = products.filter((product) => product.id != id);
+  setProducts(updatedProduct); 
+}
+}
+
+  const addAndUpdateProduct = async (newProduct,id= null) => {
+    if (id) {
+      const product = await api.productApi.updateProduct(newProduct,id);
+      if (!product) return;
+      const updateProducts = products.map((oldProduct) =>
+        oldProduct.id == id ? product : oldProduct
+      );
+      setProducts(updateProducts);
+    } else {
     const newProductWithId = { ...newProduct, id: String(products.length + 1) };
     const product = await api.productApi.createProduct(newProductWithId);
     if (!product) return;
     setProducts([...products, product]);
-    // }
+    }
   };
 
   const fetchAllProducts = async () => {
@@ -36,6 +43,7 @@ const ProductProvider = ({ children }) => {
   const productContextValue = {
     products,
     addAndUpdateProduct,
+    handleDeleteProduct
   };
 
   return (

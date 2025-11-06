@@ -5,11 +5,12 @@ import SelectElement from "./SelectElement";
 import { snakeCaseToTitle } from "../../utils/helperFunctions";
 import { useComponentContext } from "../../contexts/ComponentContext";
 
-const FormGenerator = ({ fields, onSubmit }) => {
+const FormGenerator = ({ fields, onSubmit, defaultValues }) => {
   const { toggleDrawer } = useComponentContext();
 
   // ✅ Dynamic initial values
-  const initialValues = Object.fromEntries(fields.map((f) => [f.name, f.value || ""]));
+  const initialValues = Object.fromEntries(fields.map((f) => [f.name, defaultValues?.[f.name] || ""]));
+  
   // ✅ Dynamic Yup validations
   const validationSchema = Yup.object().shape(
     Object.fromEntries(

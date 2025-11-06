@@ -19,7 +19,7 @@ const createProduct = async (product) => {
   }
 };
 
-const deleteproduct = async (productId) => {
+const deleteProduct = async (productId) => {
   try {
     const { data } = await axios.delete(`${apiUrl}/products/${productId}`);
     return data;
@@ -28,10 +28,10 @@ const deleteproduct = async (productId) => {
   }
 };
 
-const updateProduct = async (product) => {
+const updateProduct = async (product,id) => {
   try {
     const { data } = await axios.put(
-      `${apiUrl}/products/${product.id}`,
+      `${apiUrl}/products/${id}`,
       product
     );
     return data;
@@ -40,11 +40,21 @@ const updateProduct = async (product) => {
   }
 };
 
+const getProductById = async (productId) => {
+  try {
+    const {data} = await axios.get(`${apiUrl}/products/${productId}`);
+    return data;
+  } catch (error) {
+    console.log("Error fetching product by ID:", error)
+  }
+}
+
 const productApi = {
   getAllProducts,
   createProduct,
-  deleteproduct,
+  deleteProduct,
   updateProduct,
+  getProductById
 };
 
 export default productApi;

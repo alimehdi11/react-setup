@@ -24,25 +24,25 @@
   ],
   "products": [
     {
-      "id": "1",
-      "product_name": "lap",
-      "price": "999",
-      "category": "Electronics",
-      "brand": "Nike"
+      "product_name": "face cleaner",
+      "price": 888,
+      "category": "Footwear",
+      "brand": "Nike",
+      "id": "1"
     },
     {
-      "id": "2",
-      "product_name": "samsung s25 ultra",
-      "price": "100000",
-      "category": "Electronics",
-      "brand": "Samsung"
+      "product_name": "book",
+      "price": 777,
+      "category": "Clothing",
+      "brand": "Samsung",
+      "id": "2"
     },
     {
       "id": "3",
-      "product_name": "ac",
-      "price": "100000",
-      "category": "Electronics",
-      "brand": "Samsung"
+      "product_name": "samsung s25 ultra",
+      "price": 7777,
+      "category": "Beauty & Personal Care",
+      "brand": "Apple"
     }
   ]
 }
