@@ -2,7 +2,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { useTheme } from "../contexts/ThemeContext";
 import { NavLink } from "react-router-dom";
 
-const TopBar = () => {
+const Navbar = () => {
   const { darkMode, toggleTheme } = useTheme();
   return (
     <div className="flex justify-between dark:text-white items-center px-6 py-3 bg-white dark:bg-black shadow-md transition-all duration-300">
@@ -34,4 +34,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+export default Navbar;

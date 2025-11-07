@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Counter from "./components/Counter";
-import TopBar from "./components/TopBar";
+import Navbar from "./components/Navbar";
 import Users from "./pages/users/Users";
 import Products from "./pages/product/Products";
 import ProductForm from "./pages/product/ProductForm";
@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div className="min-h-screen bg-black/10 dark:bg-black/90 dark:text-white">
       <Router>
-        <TopBar />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Users />}>
             <Route path="create" element={<UserForm />} />
